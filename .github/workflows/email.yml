@@ -1,0 +1,25 @@
+name: GA1.13
+
+on:
+  workflow_dispatch:
+    inputs:
+      email:
+        description: "Email for commit step"
+        required: true
+        type: string
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Make a Commit - ${{ inputs.email }}
+        run: |
+          echo "Daily update: $(date)" >> daily-log.txt
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "23f2004837@ds.study.iitm.ac.in"
+          git add ${{ inputs.email }}.json
+          git commit -m "{\"email\": \"${{ inputs.email }}\"}"
+          git push
