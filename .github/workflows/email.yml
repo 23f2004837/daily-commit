@@ -14,8 +14,17 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+      
+      - name: Create or Override JSON File
+        run: |
+          echo "{\"email\": \"${{ inputs.email }}\"}" > "${{ inputs.email }}.json"
 
-      - name: Commit and Push Changes - ${{ inputs.email }}
+      - name: Verify File Exists Before Committing
+        run: |
+          ls -l "${{ inputs.email }}.json"  # Debug: List file details
+          cat "${{ inputs.email }}.json"    # Debug: Print file contents
+
+      - name: Commit and Push Changes
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "23f2004837@ds.study.iitm.ac.in"
