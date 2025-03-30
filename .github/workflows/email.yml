@@ -15,11 +15,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Make a Commit - ${{ inputs.email }}
+      - name: Commit and Push Changes - ${{ inputs.email }}
         run: |
-          echo "Daily update: $(date)" >> daily-log.txt
           git config --global user.name "GitHub Actions"
           git config --global user.email "23f2004837@ds.study.iitm.ac.in"
-          git add ${{ inputs.email }}.json
-          git commit -m "{\"email\": \"${{ inputs.email }}\"}"
+          git add "${{ inputs.email }}.json"
+          git commit -m "Updated email file for ${{ inputs.email }}"
           git push
+
